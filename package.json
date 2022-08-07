@@ -1,0 +1,20 @@
+{
+  "name": "cli-image-finder",
+  "version": "1.0.0",
+  "description": "NPX command line program, which finds the same image in the directory.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jokingmoony/cli-image-finder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jokingmoony/cli-image-finder/issues"
+  },
+  "homepage": "https://github.com/jokingmoony/cli-image-finder#readme"
+}
