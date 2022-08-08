@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "NPX command line program, which finds the same image in the directory.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/jokingmoony/cli-image-finder/issues"
   },
-  "homepage": "https://github.com/jokingmoony/cli-image-finder#readme"
+  "homepage": "https://github.com/jokingmoony/cli-image-finder#readme",
+  "dependencies": {
+    "pngjs": "^6.0.0"
+  }
 }
