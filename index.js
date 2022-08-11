@@ -25,14 +25,17 @@ console.log(process.env.PWD)
 
 function findPngFile(dir) {
   const files = fs.readdirSync(dir)
+  let result = []
   for (const file of files) {
     const filePath = `${dir}/${file}`
     if (fs.statSync(filePath).isDirectory()) {
-      findPngFile(filePath)
+      result = result.concat(findPngFile(filePath))
     } else if(filePath.endsWith('.png')) {
-      console.log('found', filePath)
+      result.push(filePath)
     }
   }
+  return result
 }
 
-findPngFile(process.env.PWD)
+const pngFiles = findPngFile(process.env.PWD)
+console.log(pngFiles)
