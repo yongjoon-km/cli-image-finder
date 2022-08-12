@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/jokingmoony/cli-image-finder#readme",
   "dependencies": {
+    "commander": "^9.4.0",
     "pngjs": "^6.0.0"
   }
 }
