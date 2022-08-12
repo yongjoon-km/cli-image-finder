@@ -1,5 +1,5 @@
 {
-  "name": "cli-image-finder",
+  "name": "grep-img",
   "version": "1.0.0",
   "description": "NPX command line program, which finds the same image in the directory.",
   "main": "index.js",
@@ -7,6 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": "./index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jokingmoony/cli-image-finder.git"
