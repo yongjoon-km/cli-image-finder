@@ -2,12 +2,21 @@
 import fs from 'fs';
 import { PNG } from 'pngjs/browser.js';
 import path from 'node:path';
+import { program } from 'commander';
 
-const originalImagePath = '/Users/yongjoon/repositories/cli-image-finder/sample/avocado.png'
+program
+  .argument('<imagePathToLookUp>', 'image file path to find')
+
+program.parse()
+
+const originalImagePath = path.resolve(process.env.PWD, program.args[0]);
 
 function loadPNGImage(imagePath) {
-  return new Promise((res, _) => {
+  return new Promise((res, rej) => {
     fs.createReadStream(imagePath)
+      .on("error", function() {
+        rej(this)
+      })
       .pipe(
         new PNG({
           filterType: 4,
@@ -18,13 +27,13 @@ function loadPNGImage(imagePath) {
   })
 }
 
-const originalImage = await loadPNGImage(originalImagePath)
-console.log('data', originalImage.data)
-console.log(originalImage.width, originalImage.height)
-
-// iterate files
-console.log("iterating files")
-console.log(process.env.PWD)
+let originalImage
+try {
+  originalImage = await loadPNGImage(originalImagePath)
+} catch (err) {
+  console.log('file not found', originalImagePath)
+  process.exit(-1);
+}
 
 function findPngFile(dir) {
   const files = fs.readdirSync(dir)
@@ -41,7 +50,6 @@ function findPngFile(dir) {
 }
 
 const pngFiles = findPngFile(process.env.PWD).filter(filePath => filePath !== originalImagePath)
-console.log(pngFiles)
 
 let matchFound = ""
 for (const pngFile of pngFiles) {
