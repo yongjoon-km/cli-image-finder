@@ -3,6 +3,7 @@ import fs from 'fs';
 import { PNG } from 'pngjs/browser.js';
 import path from 'node:path';
 import { program } from 'commander';
+import { loadPNGImage, findPngFile } from './png/image.js'
 
 program
   .argument('<imagePathToLookUp>', 'image file path to find')
@@ -11,42 +12,12 @@ program.parse()
 
 const originalImagePath = path.resolve(process.env.PWD, program.args[0]);
 
-function loadPNGImage(imagePath) {
-  return new Promise((res, rej) => {
-    fs.createReadStream(imagePath)
-      .on("error", function() {
-        rej(this)
-      })
-      .pipe(
-        new PNG({
-          filterType: 4,
-        })
-      ).on("parsed", function() {
-        res(this)
-      })
-  })
-}
-
 let originalImage
 try {
   originalImage = await loadPNGImage(originalImagePath)
 } catch (err) {
   console.log('file not found', originalImagePath)
   process.exit(-1);
-}
-
-function findPngFile(dir) {
-  const files = fs.readdirSync(dir)
-  let result = []
-  for (const file of files) {
-    const filePath = `${dir}/${file}`
-    if (fs.statSync(filePath).isDirectory()) {
-      result = result.concat(findPngFile(filePath))
-    } else if (filePath.endsWith('.png')) {
-      result.push(filePath)
-    }
-  }
-  return result
 }
 
 const pngFiles = findPngFile(process.env.PWD).filter(filePath => filePath !== originalImagePath)
