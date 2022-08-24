@@ -1,3 +1,6 @@
+import fs from 'fs'
+import { PNG } from 'pngjs/browser.js';
+
 export function loadPNGImage(imagePath) {
   return new Promise((res, rej) => {
     fs.createReadStream(imagePath)

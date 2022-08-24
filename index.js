@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-import fs from 'fs';
-import { PNG } from 'pngjs/browser.js';
 import path from 'node:path';
 import { program } from 'commander';
 import { loadPNGImage, findPngFile } from './png/image.js'
@@ -16,15 +14,15 @@ let originalImage
 try {
   originalImage = await loadPNGImage(originalImagePath)
 } catch (err) {
+  console.log(err)
   console.log('file not found', originalImagePath)
   process.exit(-1);
 }
 
-const pngFiles = findPngFile(process.env.PWD).filter(filePath => filePath !== originalImagePath)
+const sameImageFiles = findPngFile(process.env.PWD).filter(filePath => filePath !== originalImagePath)
 
-let matchFound = ""
-for (const pngFile of pngFiles) {
-  const targetImage = await loadPNGImage(pngFile)
+for (const image of sameImageFiles) {
+  const targetImage = await loadPNGImage(image)
   if (originalImage.width !== targetImage.width || originalImage.height !== targetImage.height) {
     continue
   }
@@ -33,8 +31,6 @@ for (const pngFile of pngFiles) {
     diff += (targetImage.data[i] - originalImage.data[i]) ** 2
   }
   if (diff === 0) {
-    matchFound = pngFile
+    console.log(image)
   }
 }
-
-console.log('found', matchFound)
