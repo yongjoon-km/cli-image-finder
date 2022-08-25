@@ -19,9 +19,9 @@ try {
   process.exit(-1);
 }
 
-const sameImageFiles = findPngFile(process.env.PWD).filter(filePath => filePath !== originalImagePath)
+const pngImageFiles = findPngFile(process.env.PWD).filter(filePath => filePath !== originalImagePath)
 
-for (const image of sameImageFiles) {
+for (const image of pngImageFiles) {
   const targetImage = await loadPNGImage(image)
   if (originalImage.width !== targetImage.width || originalImage.height !== targetImage.height) {
     continue
